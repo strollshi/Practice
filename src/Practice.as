@@ -50,6 +50,7 @@ package
 			trace("change3");
 			trace("change4");
 			trace("change5");
+			trace("change6");
 		}
 		
 		protected function initList(event:Event):void
