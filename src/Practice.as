@@ -42,22 +42,6 @@ package
 		public function Practice()
 		{
 			Practice.stage = this.stage;
-			//TweenMax.delayedCall(2,initList);
-			
-			TweenMax.delayedCall(1,MP3ResManager.instance.clickChooseBtn);
-			MP3ResManager.instance.addEventListener(Event.COMPLETE,initList);
-			trace("change1");
-			trace("change3");
-			trace("change4");
-			trace("change5");
-			trace("change6");
-		}
-		
-		protected function initList(event:Event):void
-		{
-			// TODO Auto-generated method stub
-			var datas:Array = MP3ResManager.instance.datas;
-			var _vertList:VertScrollList = new VertScrollList(this,400,100,10,datas);
 		}
 	}
 }
