@@ -48,6 +48,7 @@ package
 			MP3ResManager.instance.addEventListener(Event.COMPLETE,initList);
 			trace("change1");
 			trace("change3");
+			trace("change4");
 		}
 		
 		protected function initList(event:Event):void
