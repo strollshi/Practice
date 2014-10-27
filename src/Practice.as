@@ -49,6 +49,7 @@ package
 			trace("change1");
 			trace("change3");
 			trace("change4");
+			trace("change5");
 		}
 		
 		protected function initList(event:Event):void
