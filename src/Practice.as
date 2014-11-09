@@ -23,6 +23,7 @@ package
 	import conponents.BottomController;
 	import conponents.HorizPageScroller;
 	import conponents.ImageLoadManager;
+	import conponents.LaunchPadScrollList;
 	import conponents.VertScrollList;
 	
 	[SWF(backgroundColor="0x000000",  frameRate="30", width="1024", height="640")] 
@@ -42,6 +43,16 @@ package
 		public function Practice()
 		{
 			Practice.stage = this.stage;
+			initList();
+		}
+		
+		private function initList():void {
+			var ary:Array = [];
+			for(var i:int=0 ; i<20 ; i++){
+				ary.push(0);
+			}
+			var list:LaunchPadScrollList = 
+				new LaunchPadScrollList(this,ary);
 		}
 	}
 }
