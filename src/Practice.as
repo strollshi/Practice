@@ -20,6 +20,8 @@ package
 	
 	import MP3Player.MP3ResManager;
 	
+	import MP4Player.VideoManager;
+	
 	import conponents.BottomController;
 	import conponents.HorizPageScroller;
 	import conponents.ImageLoadManager;
@@ -43,16 +45,18 @@ package
 		public function Practice()
 		{
 			Practice.stage = this.stage;
-			initList();
+//			initList();
+			var videoManager:VideoManager = new VideoManager();
+			addChild(videoManager);
 		}
 		
-		private function initList():void {
-			var ary:Array = [];
-			for(var i:int=0 ; i<20 ; i++){
-				ary.push(0);
-			}
-			var list:LaunchPadScrollList = 
-				new LaunchPadScrollList(this,ary);
-		}
+//		private function initList():void {
+//			var ary:Array = [];
+//			for(var i:int=0 ; i<20 ; i++){
+//				ary.push(0);
+//			}
+//			var list:LaunchPadScrollList = 
+//				new LaunchPadScrollList(this,ary);
+//		}
 	}
 }
