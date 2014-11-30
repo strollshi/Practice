@@ -22,6 +22,8 @@ package
 	
 	import MP4Player.VideoManager;
 	
+	import cameraConponents.CameraManager;
+	
 	import conponents.BottomController;
 	import conponents.HorizPageScroller;
 	import conponents.ImageLoadManager;
@@ -46,8 +48,8 @@ package
 		{
 			Practice.stage = this.stage;
 //			initList();
-			var videoManager:VideoManager = new VideoManager();
-			addChild(videoManager);
+			var camManager:CameraManager = new CameraManager();
+			addChild(camManager);
 		}
 		
 //		private function initList():void {
