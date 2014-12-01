@@ -25,10 +25,13 @@ package
 	import cameraConponents.CameraManager;
 	
 	import conponents.BottomController;
+	import conponents.EllipseOrbit;
 	import conponents.HorizPageScroller;
 	import conponents.ImageLoadManager;
 	import conponents.LaunchPadScrollList;
+	import conponents.RotationController;
 	import conponents.VertScrollList;
+	import conponents.XMLFileAnalysisor;
 	
 	[SWF(backgroundColor="0x000000",  frameRate="30", width="1024", height="640")] 
 	
@@ -43,13 +46,24 @@ package
 			}
 			return _instance;
 		}
-		
+		private var orbit:EllipseOrbit = new EllipseOrbit();
+		private var _controller:RotationController;
 		public function Practice()
 		{
 			Practice.stage = this.stage;
 //			initList();
-			var camManager:CameraManager = new CameraManager();
-			addChild(camManager);
+			addChild(orbit.container);
+			orbit.container.x = Practice.stage.stageWidth*.5;
+			orbit.container.y = Practice.stage.stageHeight*.5;
+			addEventListener(Event.ENTER_FRAME , run);
+			
+			_controller = new RotationController(orbit);
+		}
+		
+		protected function run(event:Event):void
+		{
+			// TODO Auto-generated method stub
+			orbit.update();
 		}
 		
 //		private function initList():void {
