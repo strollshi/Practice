@@ -26,6 +26,7 @@ package
 	
 	import conponents.BottomController;
 	import conponents.EllipseOrbit;
+	import conponents.FileManager;
 	import conponents.HorizPageScroller;
 	import conponents.ImageLoadManager;
 	import conponents.LaunchPadScrollList;
@@ -46,33 +47,13 @@ package
 			}
 			return _instance;
 		}
-		private var orbit:EllipseOrbit = new EllipseOrbit();
-		private var _controller:RotationController;
+		
 		public function Practice()
 		{
 			Practice.stage = this.stage;
 //			initList();
-			addChild(orbit.container);
-			orbit.container.x = Practice.stage.stageWidth*.5;
-			orbit.container.y = Practice.stage.stageHeight*.5;
-			addEventListener(Event.ENTER_FRAME , run);
-			
-			_controller = new RotationController(orbit);
+			FileManager.instance().container = this;
+			FileManager.instance().saveFile();
 		}
-		
-		protected function run(event:Event):void
-		{
-			// TODO Auto-generated method stub
-			orbit.update();
-		}
-		
-//		private function initList():void {
-//			var ary:Array = [];
-//			for(var i:int=0 ; i<20 ; i++){
-//				ary.push(0);
-//			}
-//			var list:LaunchPadScrollList = 
-//				new LaunchPadScrollList(this,ary);
-//		}
 	}
 }
