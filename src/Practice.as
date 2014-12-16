@@ -26,11 +26,12 @@ package
 		public function Practice()
 		{
 			Practice.stage = this.stage;
-			var expBar:ExpProgressBar = new ExpProgressBar();
-			addChild(expBar);
-			expBar.x = 200;
-			expBar.y = 400;
-			expBar.testControl(this);
+//			var expBar:ExpProgressBar = new ExpProgressBar();
+//			addChild(expBar);
+//			expBar.x = 200;
+//			expBar.y = 400;
+//			expBar.testControl(this);
+			
 		}
 	}
 }
