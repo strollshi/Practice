@@ -3,13 +3,16 @@ package
 	import flash.display.Sprite;
 	import flash.display.Stage;
 	import flash.events.Event;
-	import flash.net.Socket;
-	import flash.sensors.Accelerometer;
-	import flash.system.Security;
 	
-	import conponents.ExpProgressBar;
+	import nape.SimpleNapeWorld;
+	import nape.geom.Vec2;
+	import nape.phys.Body;
+	import nape.phys.BodyType;
+	import nape.shape.Circle;
+	import nape.space.Space;
+	import nape.util.Debug;
 	
-	[SWF(backgroundColor="0xffffff",  frameRate="30", width="1024", height="640")] 
+	[SWF(backgroundColor="0xffffff",  frameRate="50", width="1024", height="640")] 
 	
 	public class Practice extends Sprite
 	{
@@ -31,7 +34,12 @@ package
 //			expBar.x = 200;
 //			expBar.y = 400;
 //			expBar.testControl(this);
+		
 			
+			nw = new SimpleNapeWorld();
+			addChild(nw);
 		}
+		
+		private var nw:SimpleNapeWorld;
 	}
 }
