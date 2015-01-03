@@ -1,10 +1,18 @@
 package nape
 {
+	import com.greensock.TweenMax;
+	
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
+	import nape.callbacks.CbEvent;
+	import nape.callbacks.CbType;
+	import nape.callbacks.InteractionCallback;
+	import nape.callbacks.InteractionListener;
+	import nape.callbacks.InteractionType;
 	import nape.constraint.PivotJoint;
+	import nape.dynamics.InteractionFilter;
 	import nape.geom.Vec2;
 	import nape.phys.Body;
 	import nape.phys.BodyList;
@@ -26,21 +34,63 @@ package nape
 		private var _circleBody1:Body;
 		private var rope:RopeJoint;
 		private var dildo:Dildo;
+		private var fluid:Fluid;
+		private var _bg:Sprite = new Sprite();
 		
 		public function SimpleNapeWorld(){
-			this.graphics.beginFill(0x000000,.1);
-			this.graphics.drawRect(0,0,1024,640);
-			this.graphics.endFill();
+			_bg.graphics.beginFill(0x000000,.1);
+			_bg.graphics.drawRect(0,0,1024,700);
+			_bg.graphics.endFill();
+			this.addChild(_bg);
 			
-			_world = new Space(new Vec2(0,9800));
+			_world = new Space(new Vec2(0,1));
 			_debug = new ShapeDebug(1024,640);
-			addChild(_debug.display);
-			
+			//addChild(_debug.display);
+			fluid = new Fluid(this,_world,4);			
 			createWalls();
-			createBodies();
+//			createBodies();
 			createMouseJoint();
 			
 			addEventListener(Event.ENTER_FRAME,loop);
+			addEventListener(MouseEvent.CLICK , randomCreateBody);
+			
+			var interlistener:InteractionListener = new InteractionListener(
+				CbEvent.ONGOING,
+				InteractionType.COLLISION,
+				_steelType,
+				CbType.ANY_BODY,
+				collisionHandler);
+			
+			_world.listeners.add(interlistener);
+		}
+		
+		private function collisionHandler(cb:InteractionCallback):void
+		{
+			// TODO Auto Generated method stub
+			trace(cb.int1,cb.int2);
+			delayedCancelCollision(cb.int1 as Body);
+		}
+		private function delayedCancelCollision(bd:Body):void {
+			bd.castBody.shapes.at(0).filter.collisionMask = ~bd.castBody.shapes.at(0).filter.collisionMask;
+		}
+		
+		private var _randBds:Array = [];
+		private var _steelType:CbType = new CbType();
+		public function randomCreateBody(evt:MouseEvent):void {
+			var bd:Body = new Body(BodyType.DYNAMIC,new Vec2(this.mouseX,this.mouseY));
+			bd.mass = 50;
+			var filter:InteractionFilter = new InteractionFilter();
+			var circle:Circle = new Circle(30,new Vec2(0,0),Material.steel(),filter);
+			bd.shapes.push(circle);
+			bd.space = _world;
+			bd.cbTypes.add(_steelType); 
+			var skin:Sprite = new Sprite();
+			skin.graphics.beginFill(0x000000,.5);
+			skin.graphics.drawCircle(0,0,30);
+			skin.graphics.endFill();
+			addChild(skin);
+			bd.userData.graphic = skin;
+			_randBds.push(bd);
 		}
 			
 		private function loop(event:Event):void
@@ -53,8 +103,34 @@ package nape
 			_debug.draw(_world);
 			//优化显示视图
 			_debug.flush();
-			
-			dildo.update();
+			fillColor();
+			fluid.update();
+			updateBdForce();
+		}
+		
+		private function updateBdForce():void {
+			var skin:Sprite;
+			for each(var bd:Body in _randBds){
+				bd.applyImpulse(new Vec2(0,2000));
+				skin = bd.userData.graphic;
+				if(skin){
+					skin.x = bd.position.x;
+					skin.y = bd.position.y;
+				}
+			}
+		}
+		
+		private function fillColor():void {
+			this.graphics.clear();
+			this.graphics.beginFill(0x0000ff,.5);
+			this.graphics.moveTo(20,700);
+			for(var i:int=0 ; i<fluid.bodyList.length ; i++){
+				var pos:Vec2 = fluid.bodyList.at(i).position;
+				this.graphics.lineTo(pos.x,pos.y);
+			}
+			this.graphics.lineTo(Practice.instance.width-20,700);
+			this.graphics.lineTo(20,700);
+			this.graphics.endFill();
 		}
 		
 		public function createWalls():void {
@@ -108,7 +184,7 @@ package nape
 			
 //			rope = new RopeJoint(this,_world,10,300);
 			//rope.active = true;
-			dildo = new Dildo(this,_world);
+			//dildo = new Dildo(this,_world);
 			
 		}
 		

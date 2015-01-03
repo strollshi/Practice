@@ -12,6 +12,8 @@ package
 	import nape.space.Space;
 	import nape.util.Debug;
 	
+	import studyThreeD.threeD;
+	
 	[SWF(backgroundColor="0xffffff",  frameRate="50", width="1024", height="640")] 
 	
 	public class Practice extends Sprite
@@ -38,6 +40,11 @@ package
 			
 			nw = new SimpleNapeWorld();
 			addChild(nw);
+			
+//			var _3d:threeD = new threeD();
+//			addChild(_3d);
+//			_3d.x = 100;
+//			_3d.y = 100;
 		}
 		
 		private var nw:SimpleNapeWorld;
